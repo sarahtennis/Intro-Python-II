@@ -1,4 +1,7 @@
+import sys
+
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -6,7 +9,7 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("Foyer", """Dim light filters in from the [s]outh. Dusty
 passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
@@ -38,12 +41,35 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Zino", room['outside'])
 
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
+
+while True:
+    print(f"\033[36m\n-----{player.location.name}-----\033[0m")
+    print(f"\033[96m{player.location.description}\n\033[0m")
+    
+    while True:
+        user_input = input('>> Choose a direction to move: ')
+        user_input = user_input.lower()
+
+        if user_input == 'n' or user_input == 's' or user_input == 'e' or user_input == 'w':
+            neighbor = player.location.getNeighbor(user_input)
+
+            if neighbor:
+                player.location = neighbor
+                break
+            else:
+                print('You run into a wall. Try another direction.')
+        elif user_input == 'q':
+            print(f"Thanks for playing!")
+            sys.exit()
+
+
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
