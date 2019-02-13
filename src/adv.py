@@ -2,12 +2,20 @@ import sys
 
 from room import Room
 from player import Player
+from item import Item
+
+# Declare all items
+
+item = {
+    'rock': Item('Rock', 'A small boulder or a large pebble'),
+    'lemon': Item('Lemon', "A yellow citrus fruit")
+}
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [item['rock'], item['lemon']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -23,7 +31,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 # Link rooms together
 
@@ -50,15 +57,16 @@ player = Player("Zino", room['outside'])
 # * Waits for user input and decides what to do.
 
 while True:
-    print(f"\033[32m\n-----{player.location.name}-----\033[0m")
-    print(f"\033[32m{player.location.description}\n\033[0m")
+    print(f"\033[32m\n-----{player.location.name}-----")
+    print(f"{player.location.description}")
+    print(f"You can see: {player.location.get_items()}\n\033[0m")
     
     while True:
         user_input = input('>> Choose a direction to move: ')
         user_input = user_input.lower()
 
         if user_input == 'n' or user_input == 's' or user_input == 'e' or user_input == 'w':
-            neighbor = player.location.getNeighbor(user_input)
+            neighbor = player.location.get_neighbor(user_input)
 
             if neighbor:
                 player.location = neighbor

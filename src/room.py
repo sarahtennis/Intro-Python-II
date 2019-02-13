@@ -11,7 +11,8 @@ class Room:
         self.e_to = e_to
         self.w_to = w_to
 
-    def getNeighbor(self, direction):
+    # returns neighboring room in argument direction, else False
+    def get_neighbor(self, direction):
         if direction.lower() == "n":
             if self.n_to:
                 return self.n_to
@@ -26,3 +27,14 @@ class Room:
                 return self.w_to
         else: 
             return False
+
+    def get_items(self):
+        if len(self.items):
+            output = []
+
+            for item in self.items:
+                output.append(item.name)
+        
+            return ', '.join(output)
+        else:
+            return 'Nothing'
