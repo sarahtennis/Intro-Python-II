@@ -9,7 +9,7 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the [s]outh. Dusty
+    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
@@ -50,8 +50,8 @@ player = Player("Zino", room['outside'])
 # * Waits for user input and decides what to do.
 
 while True:
-    print(f"\033[36m\n-----{player.location.name}-----\033[0m")
-    print(f"\033[96m{player.location.description}\n\033[0m")
+    print(f"\033[32m\n-----{player.location.name}-----\033[0m")
+    print(f"\033[32m{player.location.description}\n\033[0m")
     
     while True:
         user_input = input('>> Choose a direction to move: ')
@@ -64,10 +64,12 @@ while True:
                 player.location = neighbor
                 break
             else:
-                print('You run into a wall. Try another direction.')
+                print('\n\033[31mCan\'t go that way. Try another direction.\033[0m\n')
         elif user_input == 'q':
-            print(f"Thanks for playing!")
+            print("\n\033[35mThanks for playing!\033[0m\n")
             sys.exit()
+        else:
+            print("\n\033[31mHmmm, that isn't a direction.\033[0m\n")
 
 
 #
