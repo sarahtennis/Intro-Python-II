@@ -63,7 +63,7 @@ while True:
     else:
         os.system('clear')
 
-    print(f"\033[32m\n-----{player.location.name}-----")
+    print(f"\033[34m\n-----{player.location.name}-----")
     print(f"{player.location.description}")
     print(f"You can see: {player.location.get_items()}\n\033[0m")
     
@@ -88,8 +88,9 @@ while True:
             else:
                 print("\n\033[31mHmmm, that isn't a direction.\033[0m\n")
         elif len(user_input) == 2:
-            # do 2 input things
-            pass
+            # user picking up item
+            if user_input[0] == 'grab' or user_input[0] == 'take':
+                player.location.room_to_inventory(user_input[1], player)
         else:
             print("\n\033[31mNothing happens.\033[0m\n")
 

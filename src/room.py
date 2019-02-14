@@ -1,3 +1,5 @@
+from item import Item
+
 # information for visitable room
 # items: list of items in room
 
@@ -28,6 +30,7 @@ class Room:
         else: 
             return False
 
+    # formats output to display all items currently in room
     def get_items(self):
         if len(self.items):
             output = []
@@ -38,3 +41,13 @@ class Room:
             return ', '.join(output)
         else:
             return 'Nothing'
+
+    # removes and returns item if in room, else false
+    # item is string name from user input
+    def room_to_inventory(self, item, player):
+        if len(self.items):
+            to_remove = list(filter(lambda x: x.name.lower() == item.lower(), self.items))
+            to_remove = to_remove[0]
+            self.items.remove(to_remove)
+            player.take_item(to_remove)
+            print(f"\n\033[32m{player.name} picks up {to_remove.name}\033[0m\n")
