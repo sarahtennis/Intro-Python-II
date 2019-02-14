@@ -52,17 +52,29 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Zino", room['outside'], [item['lint']])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
+# prints "Adventure Game" to terminal
+with open(os.path.join(sys.path[0], 'logo.txt'), 'r') as logo:
+    for line in logo:
+        print(line, end='')
+
+# start menu options
+print('\n\n{:11s}{:10s}\n'.format('[S]tart', '[Q]uit'))
 
 while True:
-    if os.name == 'nt':
-        os.system('cls')
-    else:
-        os.system('clear')
+    start_input = input('>> ')
+    start_input = start_input.lower().split()
+
+    if len(start_input) == 1:
+        start_input = start_input[0]
+        if start_input == 's':
+            break
+        elif start_input == 'q' or start_input == 'exit':
+            print("\n\033[35mThanks for playing!\033[0m\n")
+            sys.exit()
+        else:
+            pass
+
+while True:
 
     print(f"\033[34m\n-----{player.location.name}-----")
     print(f"{player.location.description}\033[0m\n")
@@ -111,6 +123,11 @@ while True:
         # empty or 2+ word input
         else:
             print("\n\033[31mNothing happens.\033[0m\n")
+    
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 
 #

@@ -44,6 +44,7 @@ class Room:
 
     # if able, removes item from room and puts in user inventory --> returns true
     # item is string name from user input
+    # NOTE: boolean return currently unused
     def room_to_inventory(self, item, player):
         if len(self.items):
             to_remove = list(filter(lambda x: x.name.lower() == item.lower(), self.items))
@@ -54,6 +55,7 @@ class Room:
                 print("\n\033[31mThat item is not in this room.\033[0m\n")
                 return False
 
+            # removes item from room --> adds item to player inventory --> runs item method on_take
             self.items.remove(to_remove)
             player.add_item(to_remove)
             to_remove.on_take()
