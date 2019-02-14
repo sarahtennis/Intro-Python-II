@@ -56,6 +56,8 @@ class Room:
 
             self.items.remove(to_remove)
             player.add_item(to_remove)
+            to_remove.on_take()
+
             print(f"\n\033[32m{player.name} picks up {to_remove.name}\033[0m\n")
             return True
         else:

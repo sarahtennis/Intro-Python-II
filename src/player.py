@@ -34,6 +34,8 @@ class Player:
 
             self.inventory.remove(to_remove)
             room.add_item(to_remove)
+            to_remove.on_drop()
+            
             print(f"\n\033[32m{self.name} drops {to_remove.name}\033[0m\n")
             return True
         else:

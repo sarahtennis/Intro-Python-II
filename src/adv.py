@@ -65,8 +65,8 @@ while True:
         os.system('clear')
 
     print(f"\033[34m\n-----{player.location.name}-----")
-    print(f"{player.location.description}")
-    print(f"You can see: {player.location.get_items()}\n\033[0m")
+    print(f"{player.location.description}\033[0m\n")
+    
     
     while True:
         
@@ -86,18 +86,24 @@ while True:
                     break
                 else:
                     print('\n\033[31mCan\'t go that way. Try another direction.\033[0m\n')
-            elif user_input == 'q':
+            # quits game
+            elif user_input == 'q' or user_input == 'exit':
                 print("\n\033[35mThanks for playing!\033[0m\n")
                 sys.exit()
+            # displays user inventory
             elif user_input == 'i' or user_input == "inventory":
                 print(f"\n\033[36mInventory:\n{player.get_inventory()}\033[0m\n")
+            # displays items in room
+            elif user_input == 'search' or user_input == 'look':
+                print(f"\n\033[36mYou can see: {player.location.get_items()}\033[0m\n")
             else:
                 print("\n\033[31mNothing happens.\033[0m\n")
         # two word input
         elif len(user_input) == 2:
-            # user picking up item
+            # transfers item from room to user inventory
             if user_input[0] == 'grab' or user_input[0] == 'take':
                 player.location.room_to_inventory(user_input[1], player)
+            # transfers item from user inventory to room
             elif user_input[0] == 'drop' or user_input[0] == 'remove':
                 player.inventory_to_room(user_input[1], player.location)
             else:
