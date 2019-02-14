@@ -55,9 +55,12 @@ class Room:
                 return False
 
             self.items.remove(to_remove)
-            player.take_item(to_remove)
+            player.add_item(to_remove)
             print(f"\n\033[32m{player.name} picks up {to_remove.name}\033[0m\n")
             return True
         else:
             print("\n\033[31mThere are no items in this room.\033[0m\n")
             return False
+    
+    def add_item(self, item):
+        self.items.append(item)

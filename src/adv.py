@@ -98,6 +98,8 @@ while True:
             # user picking up item
             if user_input[0] == 'grab' or user_input[0] == 'take':
                 player.location.room_to_inventory(user_input[1], player)
+            elif user_input[0] == 'drop' or user_input[0] == 'remove':
+                player.inventory_to_room(user_input[1], player.location)
             else:
                 print("\n\033[31mNothing happens.\033[0m\n")
         # empty or 2+ word input
