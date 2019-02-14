@@ -9,7 +9,8 @@ from item import Item
 
 item = {
     'rock': Item('Rock', 'A small boulder or a large pebble'),
-    'lemon': Item('Lemon', "A yellow citrus fruit")
+    'lemon': Item('Lemon', "A yellow citrus fruit"),
+    'lint': Item('Lint', "From a pocket that hasn't been cleaned in a while")
 }
 
 # Declare all the rooms
@@ -49,7 +50,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Zino", room['outside'])
+player = Player("Zino", room['outside'], [item['lint']])
 
 # Write a loop that:
 #
@@ -69,11 +70,14 @@ while True:
     
     while True:
         
-        user_input = input('>> Choose a direction to move: ')
+        # change phrasing to be nicer
+        user_input = input('>> User input: ')
         user_input = user_input.lower().split()
         
+        # one word input
         if len(user_input) == 1:
             user_input = user_input[0]
+            # cardinal directions to move
             if user_input == 'n' or user_input == 's' or user_input == 'e' or user_input == 'w':
                 neighbor = player.location.get_neighbor(user_input)
 
@@ -85,12 +89,18 @@ while True:
             elif user_input == 'q':
                 print("\n\033[35mThanks for playing!\033[0m\n")
                 sys.exit()
+            elif user_input == 'i' or user_input == "inventory":
+                print(f"\n\033[36mInventory:\n{player.get_inventory()}\033[0m\n")
             else:
-                print("\n\033[31mHmmm, that isn't a direction.\033[0m\n")
+                print("\n\033[31mNothing happens.\033[0m\n")
+        # two word input
         elif len(user_input) == 2:
             # user picking up item
             if user_input[0] == 'grab' or user_input[0] == 'take':
                 player.location.room_to_inventory(user_input[1], player)
+            else:
+                print("\n\033[31mNothing happens.\033[0m\n")
+        # empty or 2+ word input
         else:
             print("\n\033[31mNothing happens.\033[0m\n")
 

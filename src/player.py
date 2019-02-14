@@ -9,4 +9,15 @@ class Player:
     def take_item(self, item):
         self.inventory.append(item)
 
+    def get_inventory(self):
+        if len(self.inventory):
+            output = []
+
+            for item in self.inventory:
+                output.append(f"{item.name} - {item.description}")
+        
+            return '\n'.join(output)
+        else:
+            return 'Nothing'
+
     # drop_item: leave item in current room

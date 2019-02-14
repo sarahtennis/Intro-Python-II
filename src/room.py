@@ -42,12 +42,22 @@ class Room:
         else:
             return 'Nothing'
 
-    # removes and returns item if in room, else false
+    # if able, removes item from room and puts in user inventory --> returns true
     # item is string name from user input
     def room_to_inventory(self, item, player):
         if len(self.items):
             to_remove = list(filter(lambda x: x.name.lower() == item.lower(), self.items))
-            to_remove = to_remove[0]
+
+            if len(to_remove):
+                to_remove = to_remove[0]
+            else:
+                print("\n\033[31mThat item is not in this room.\033[0m\n")
+                return False
+
             self.items.remove(to_remove)
             player.take_item(to_remove)
             print(f"\n\033[32m{player.name} picks up {to_remove.name}\033[0m\n")
+            return True
+        else:
+            print("\n\033[31mThere are no items in this room.\033[0m\n")
+            return False
