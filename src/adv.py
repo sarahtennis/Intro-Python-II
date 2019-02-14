@@ -67,6 +67,8 @@ while True:
     if len(start_input) == 1:
         start_input = start_input[0]
         if start_input == 's':
+            name_input = input('\n>> Name the adventurer: ')
+            player = Player(name_input, room['outside'], [item['lint']])
             break
         elif start_input == 'q' or start_input == 'exit':
             print("\n\033[35mThanks for playing!\033[0m\n")
