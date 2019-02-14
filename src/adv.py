@@ -1,4 +1,5 @@
 import sys
+import os
 
 from room import Room
 from player import Player
@@ -57,27 +58,40 @@ player = Player("Zino", room['outside'])
 # * Waits for user input and decides what to do.
 
 while True:
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
     print(f"\033[32m\n-----{player.location.name}-----")
     print(f"{player.location.description}")
     print(f"You can see: {player.location.get_items()}\n\033[0m")
     
     while True:
+        
         user_input = input('>> Choose a direction to move: ')
-        user_input = user_input.lower()
+        user_input = user_input.lower().split()
+        
+        if len(user_input) == 1:
+            user_input = user_input[0]
+            if user_input == 'n' or user_input == 's' or user_input == 'e' or user_input == 'w':
+                neighbor = player.location.get_neighbor(user_input)
 
-        if user_input == 'n' or user_input == 's' or user_input == 'e' or user_input == 'w':
-            neighbor = player.location.get_neighbor(user_input)
-
-            if neighbor:
-                player.location = neighbor
-                break
+                if neighbor:
+                    player.location = neighbor
+                    break
+                else:
+                    print('\n\033[31mCan\'t go that way. Try another direction.\033[0m\n')
+            elif user_input == 'q':
+                print("\n\033[35mThanks for playing!\033[0m\n")
+                sys.exit()
             else:
-                print('\n\033[31mCan\'t go that way. Try another direction.\033[0m\n')
-        elif user_input == 'q':
-            print("\n\033[35mThanks for playing!\033[0m\n")
-            sys.exit()
+                print("\n\033[31mHmmm, that isn't a direction.\033[0m\n")
+        elif len(user_input) == 2:
+            # do 2 input things
+            pass
         else:
-            print("\n\033[31mHmmm, that isn't a direction.\033[0m\n")
+            print("\n\033[31mNothing happens.\033[0m\n")
 
 
 #
